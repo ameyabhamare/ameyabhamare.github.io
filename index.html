@@ -1,817 +1,674 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ameya Bhamare | Data Scientist & GenAI Engineer</title>
-  <meta name="description" content="Portfolio website for Ameya Bhamare — Data Scientist focused on GenAI, RAG, MLOps, and production ML systems." />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ameya Bhamare | Applied AI Engineer</title>
+  <meta name="description" content="Applied AI Engineer shipping agentic RAG, LLM evaluation, and production ML systems. Client-facing technical lead from requirements to deployment." />
+  <meta property="og:title" content="Ameya Bhamare | Applied AI Engineer" />
+  <meta property="og:description" content="I ship AI systems that hold up in production, and I own them end to end." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ameyabhamare.github.io/" />
+  <meta name="theme-color" content="#09090b" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0b1020;
-      --bg-soft: #121933;
-      --card: rgba(18, 25, 51, 0.82);
-      --text: #eef2ff;
-      --muted: #b8c0e0;
-      --line: rgba(255,255,255,0.1);
-      --accent: #7c9cff;
-      --accent-2: #8b5cf6;
-      --success: #8ef0c5;
-      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --bg: #09090b;
+      --bg-raised: #111113;
+      --bg-card: #141417;
+      --border: #26262b;
+      --border-strong: #3f3f46;
+      --text: #fafafa;
+      --text-muted: #a1a1aa;
+      --text-dim: #71717a;
+      --accent: #34d399;
+      --accent-strong: #10b981;
+      --accent-soft: rgba(52, 211, 153, 0.1);
+      --accent-2: #818cf8;
+      --warn: #fbbf24;
+      --radius: 14px;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
       --max: 1120px;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
       color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(124, 156, 255, 0.20), transparent 28%),
-        radial-gradient(circle at top right, rgba(139, 92, 246, 0.18), transparent 24%),
-        linear-gradient(180deg, #09101f 0%, #0b1020 100%);
+      font-family: var(--sans);
+      font-size: 16px;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
-
     a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
+    img, svg { display: block; max-width: 100%; }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: -0.02em; }
+    p { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
-    .container { width: min(calc(100% - 2rem), var(--max)); margin: 0 auto; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    .mono { font-family: var(--mono); }
+    .accent { color: var(--accent); }
 
+    /* ---------- Nav ---------- */
     .nav {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(11, 16, 32, 0.72);
-      border-bottom: 1px solid var(--line);
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(9, 9, 11, 0.8);
+      backdrop-filter: saturate(160%) blur(12px);
+      -webkit-backdrop-filter: saturate(160%) blur(12px);
+      border-bottom: 1px solid var(--border);
     }
-
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.95rem 0;
-      gap: 1rem;
-    }
-
-    .brand {
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      font-size: 1rem;
-    }
-
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .brand { font-family: var(--mono); font-weight: 500; font-size: 14px; }
     .brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--text-muted); }
+    .nav-links a:hover { color: var(--text); }
+    @media (max-width: 760px) { .nav-links { display: none; } }
 
-    .nav-links {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      align-items: center;
-      color: var(--muted);
-      font-size: 0.95rem;
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 44px; padding: 0 18px;
+      border-radius: 10px; border: 1px solid var(--border-strong);
+      font-size: 14px; font-weight: 600;
+      transition: background .15s, border-color .15s, color .15s, transform .15s;
     }
+    .btn:hover { border-color: var(--text-dim); background: var(--bg-card); }
+    .btn:active { transform: translateY(1px); }
+    .btn svg { width: 16px; height: 16px; }
+    .btn-primary { background: var(--accent); border-color: var(--accent); color: #052e1f; }
+    .btn-primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+    .btn-sm { height: 36px; padding: 0 14px; font-size: 13px; }
 
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--text); }
-
-    .hero {
-      padding: 5.5rem 0 3.5rem;
+    /* ---------- Hero ---------- */
+    .hero { position: relative; padding: 96px 0 72px; overflow: hidden; }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(600px 300px at 15% 0%, rgba(52, 211, 153, 0.12), transparent 70%),
+        radial-gradient(500px 300px at 90% 10%, rgba(129, 140, 248, 0.10), transparent 70%);
     }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 2rem;
-      align-items: center;
+    .hero .wrap { position: relative; }
+    .status {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 12px; color: var(--text-muted);
+      border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px;
+      background: var(--bg-raised);
     }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      border: 1px solid rgba(142, 240, 197, 0.2);
-      background: rgba(142, 240, 197, 0.08);
-      color: var(--success);
-      padding: 0.5rem 0.8rem;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
+    .status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+    .hero h1 {
+      margin-top: 24px;
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 800;
+      max-width: 14ch;
     }
-
-    h1 {
-      font-size: clamp(2.6rem, 6vw, 4.8rem);
-      line-height: 1.02;
-      margin: 0 0 1rem;
-      letter-spacing: -0.04em;
+    .hero h1 .grad {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-
-    .gradient {
-      background: linear-gradient(135deg, #c7d2fe 0%, #8bb8ff 45%, #a78bfa 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .subtitle {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 720px;
-      margin-bottom: 1.5rem;
-    }
-
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.85rem;
-      margin: 1.5rem 0 1.7rem;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      padding: 0.85rem 1.15rem;
-      border-radius: 14px;
-      font-weight: 700;
-      border: 1px solid transparent;
-      transition: 0.2s ease;
-    }
-
-    .button.primary {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
-      box-shadow: var(--shadow);
-    }
-
-    .button.secondary {
-      border-color: var(--line);
-      color: var(--text);
-      background: rgba(255,255,255,0.03);
-    }
-
-    .button:hover { transform: translateY(-2px); }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.85rem;
-      margin-top: 1rem;
-    }
-
-    .stat {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 1rem;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.35rem;
-      margin-bottom: 0.15rem;
-    }
-
-    .hero-card, .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-card {
-      padding: 1.4rem;
-    }
-
-    .hero-card h3,
-    .section-header h2 {
-      margin: 0;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-list {
-      display: grid;
-      gap: 0.9rem;
-      margin-top: 1rem;
-    }
-
-    .hero-item {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      border-radius: 18px;
-      padding: 0.95rem 1rem;
-    }
-
-    .hero-item strong { display: block; margin-bottom: 0.2rem; }
-    .hero-item span { color: var(--muted); font-size: 0.96rem; }
-
-    section { padding: 2rem 0; }
-
-    .section-header {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .section-header p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 720px;
-    }
-
-    .about-grid,
-    .skills-grid,
-    .projects-grid,
-    .contact-grid {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .about-grid { grid-template-columns: 1.1fr 0.9fr; }
-    .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .contact-grid { grid-template-columns: 1fr 1fr 1fr; }
-
-    .card { padding: 1.3rem; }
-
-    .card h3 {
-      margin: 0 0 0.6rem;
-      font-size: 1.1rem;
-    }
-
-    .muted { color: var(--muted); }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-      margin-top: 0.85rem;
-    }
+    .hero .role { margin-top: 20px; font-family: var(--mono); font-size: 14px; color: var(--accent); }
+    .hero .sub { margin-top: 12px; max-width: 62ch; font-size: clamp(17px, 2vw, 19px); color: var(--text-muted); }
+    .hero .sub strong { color: var(--text); font-weight: 600; }
+    .cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-stack { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 8px; }
 
     .chip {
-      border: 1px solid rgba(124,156,255,0.24);
-      background: rgba(124,156,255,0.08);
-      color: #d8e1ff;
-      padding: 0.42rem 0.72rem;
-      border-radius: 999px;
-      font-size: 0.88rem;
+      font-family: var(--mono); font-size: 12px;
+      padding: 4px 10px; border-radius: 6px;
+      border: 1px solid var(--border); background: var(--bg-raised); color: var(--text-muted);
+      white-space: nowrap;
     }
 
-    .timeline {
-      display: grid;
-      gap: 1rem;
+    /* ---------- Metrics ribbon ---------- */
+    .metrics { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-raised); }
+    .metrics ul { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .metrics li { padding: 28px 20px; border-left: 1px solid var(--border); }
+    .metrics li:first-child { border-left: 0; }
+    .metric-value { font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
+    .metric-value .unit { color: var(--accent); }
+    .metric-label { margin-top: 4px; font-size: 14px; color: var(--text-muted); }
+    .metric-note { margin-top: 6px; font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+    @media (max-width: 860px) {
+      .metrics ul { grid-template-columns: repeat(2, 1fr); }
+      .metrics li:nth-child(3) { border-left: 0; }
+      .metrics li:nth-child(n+3) { border-top: 1px solid var(--border); }
     }
 
-    .timeline-item {
-      position: relative;
-      padding: 1.35rem;
-      border-radius: 22px;
-      background: var(--card);
-      border: 1px solid var(--line);
+    /* ---------- Sections ---------- */
+    section.block { padding: 96px 0 0; }
+    .eyebrow { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+    .section-title { margin-top: 8px; font-size: clamp(28px, 4vw, 40px); font-weight: 700; }
+    .section-lede { margin-top: 12px; max-width: 64ch; color: var(--text-muted); }
+
+    /* ---------- Projects ---------- */
+    .projects { margin-top: 40px; display: grid; gap: 24px; }
+    .project {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--bg-card); overflow: hidden;
     }
-
-    .role-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      align-items: start;
-      margin-bottom: 0.8rem;
-      flex-wrap: wrap;
+    .project-head {
+      display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px;
+      padding: 24px 24px 0;
     }
+    .project-head h3 { font-size: 22px; font-weight: 700; }
+    .project-org { font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
 
-    .role-top h3 { margin: 0; }
-    .role-top .date { color: var(--muted); font-size: 0.95rem; }
-
-    ul.clean {
-      margin: 0.75rem 0 0;
-      padding-left: 1.1rem;
+    .arch {
+      margin: 20px 24px 0; padding: 18px;
+      border: 1px dashed var(--border-strong); border-radius: 10px;
+      background:
+        linear-gradient(var(--bg-raised), var(--bg-raised)) padding-box,
+        repeating-linear-gradient(0deg, transparent 0 23px, rgba(255,255,255,0.025) 23px 24px);
     }
-
-    ul.clean li { margin-bottom: 0.6rem; color: #dde3ff; }
-
-    .project-card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      height: 100%;
+    .arch-label { font-family: var(--mono); font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .node {
+      font-family: var(--mono); font-size: 12px; color: var(--text);
+      padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-strong); background: var(--bg);
     }
+    .node.ai { border-color: rgba(52, 211, 153, 0.5); color: var(--accent); }
+    .node.human { border-color: rgba(251, 191, 36, 0.5); color: var(--warn); }
+    .node.out { border-color: rgba(129, 140, 248, 0.5); color: var(--accent-2); }
+    .arrow { color: var(--text-dim); font-family: var(--mono); font-size: 12px; }
 
-    .project-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      align-items: start;
+    .apsm { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 20px; background: var(--border); border-top: 1px solid var(--border); }
+    .apsm > div { background: var(--bg-card); padding: 20px 24px 24px; }
+    .apsm h4 { margin: 0 0 8px; font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+    .apsm p, .apsm li { font-size: 15px; color: var(--text-muted); }
+    .apsm li { position: relative; padding-left: 16px; margin-top: 6px; }
+    .apsm li::before { content: "›"; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); }
+    .apsm .impact li { color: var(--text); }
+    .apsm .impact b { color: var(--accent); font-weight: 700; }
+    .project-foot { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 24px; border-top: 1px solid var(--border); }
+    @media (max-width: 860px) { .apsm { grid-template-columns: 1fr; } }
+
+    /* ---------- Leadership ---------- */
+    .grid-2 { margin-top: 40px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+    .card { border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); padding: 24px; }
+    .card-icon {
+      width: 36px; height: 36px; border-radius: 8px; display: grid; place-items: center;
+      background: var(--accent-soft); color: var(--accent); margin-bottom: 16px;
     }
+    .card-icon svg { width: 18px; height: 18px; }
+    .card h3 { font-size: 18px; font-weight: 600; }
+    .card p { margin-top: 8px; color: var(--text-muted); font-size: 15px; }
+    .card .proof { margin-top: 14px; font-family: var(--mono); font-size: 12px; color: var(--accent); }
 
-    .project-top a {
-      color: #dbe5ff;
-      font-weight: 700;
+    /* ---------- Stack ---------- */
+    .stack { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media (max-width: 860px) { .stack { grid-template-columns: 1fr; } }
+    .stack .card h3 { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+    .stack .chips { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .stack .chip { color: var(--text); }
+
+    /* ---------- Experience ---------- */
+    .timeline { margin-top: 40px; border-left: 1px solid var(--border); }
+    .role-row { position: relative; padding: 0 0 32px 28px; }
+    .role-row::before {
+      content: ""; position: absolute; left: -5px; top: 8px; width: 9px; height: 9px; border-radius: 50%;
+      background: var(--bg); border: 2px solid var(--border-strong);
     }
+    .role-row.current::before { border-color: var(--accent); background: var(--accent); }
+    .role-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; }
+    .role-top h3 { font-size: 17px; font-weight: 600; }
+    .role-top h3 span { color: var(--text-muted); font-weight: 500; }
+    .role-dates { font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+    .role-row p { margin-top: 6px; color: var(--text-muted); font-size: 15px; max-width: 75ch; }
 
-    .project-meta {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
+    .edu { margin-top: 8px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    @media (max-width: 760px) { .edu { grid-template-columns: 1fr; } }
+    .edu .card p { margin-top: 4px; }
 
-    .contact-card {
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    footer {
-      padding: 2rem 0 4rem;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .divider {
-      height: 1px;
-      background: var(--line);
-      margin: 1.75rem 0 0;
-    }
-
-    @media (max-width: 900px) {
-      .hero-grid,
-      .about-grid,
-      .skills-grid,
-      .projects-grid,
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .stats { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 640px) {
-      .nav-inner { align-items: start; flex-direction: column; }
-      .hero { padding-top: 4.25rem; }
-      h1 { font-size: 2.7rem; }
-      .button { width: 100%; justify-content: center; }
-      .cta-row { flex-direction: column; }
-    }
+    /* ---------- Contact ---------- */
+    .contact { margin: 96px 0 0; padding: 56px 0; border-top: 1px solid var(--border); background: var(--bg-raised); }
+    .contact .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
+    .contact h2 { font-size: clamp(24px, 3.5vw, 32px); font-weight: 700; }
+    .contact p { margin-top: 8px; color: var(--text-muted); }
+    footer { padding: 24px 0 40px; background: var(--bg-raised); font-size: 13px; color: var(--text-dim); }
+    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+    footer a:hover { color: var(--text); }
+    footer .links { display: flex; gap: 20px; }
   </style>
 </head>
 <body>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a href="#top" class="brand">Ameya<span>.</span></a>
-      <div class="nav-links">
-        <a href="#about">About</a>
+
+  <!-- ================= NAV ================= -->
+  <header class="nav">
+    <div class="wrap">
+      <a href="#top" class="brand">ameya<span>.</span>bhamare</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#systems">Systems</a>
+        <a href="#leadership">Leadership</a>
+        <a href="#stack">Stack</a>
         <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#education">Education</a>
-        <a href="#contact">Contact</a>
-      </div>
+      </nav>
+      <a class="btn btn-primary btn-sm" href="mailto:ameyarb1804@gmail.com">Get in touch</a>
     </div>
-  </nav>
+  </header>
 
   <main id="top">
+
+    <!-- ================= HERO ================= -->
     <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <div class="eyebrow">Available for ML, GenAI, and data science opportunities</div>
-          <h1>
-            Building <span class="gradient">production AI systems</span> with measurable business impact.
-          </h1>
-          <p class="subtitle">
-            I’m <strong>Ameya Bhamare</strong>, a Data Scientist focused on GenAI, retrieval-augmented systems, interpretable machine learning, and scalable MLOps. I enjoy turning messy, high-stakes business problems into reliable ML products that teams can trust.
-          </p>
-          <div class="cta-row">
-            <a class="button primary" href="mailto:ameyarb1804@gmail.com">Contact Me</a>
-            <a class="button secondary" href="https://github.com/ameyabhamare" target="_blank" rel="noreferrer">GitHub</a>
-            <a class="button secondary" href="https://www.linkedin.com/in/ameyabhamare" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a class="button secondary" href="https://scholar.google.com/citations?user=QlklRLIAAAAJ&hl=en" target="_blank" rel="noreferrer">Google Scholar</a>
-            <a class="button secondary" href="https://www.researchgate.net/profile/Ameya-Bhamare" target="_blank" rel="noreferrer">ResearchGate</a>
-          </div>
-          <div class="stats">
-            <div class="stat">
-              <strong>95%</strong>
-              <span class="muted">manual effort reduction on QRS ML workflows</span>
-            </div>
-            <div class="stat">
-              <strong>3×</strong>
-              <span class="muted">reviewer throughput using evaluation-driven RAG workflows</span>
-            </div>
-            <div class="stat">
-              <strong>65+</strong>
-              <span class="muted">analysts trained through Databricks enablement</span>
-            </div>
-          </div>
+      <div class="wrap">
+        <span class="status"><span class="dot"></span>Open to Applied AI / ML Engineering roles · Bay Area</span>
+
+        <h1>I ship AI systems that <span class="grad">hold up in production.</span></h1>
+
+        <p class="role">Applied AI Engineer · Agentic RAG · LLM Evaluation · ML Platforms</p>
+        <p class="sub">
+          I build <strong>multi-agent RAG, LLM-as-a-Judge evaluation, and production ML pipelines</strong>
+          in regulated healthcare, and I'm the person in the room with the client. I take a vague
+          business ask, scope it, design the architecture, ship it, and own it after launch.
+          Previously at <strong>Amazon</strong> (S3 AI research) and <strong>EY</strong>.
+        </p>
+
+        <div class="cta">
+          <a class="btn btn-primary" href="resume.pdf" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+            Resume (PDF)
+          </a>
+          <a class="btn" href="https://github.com/ameyabhamare" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.42c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+            GitHub
+          </a>
+          <a class="btn" href="https://www.linkedin.com/in/ameyabhamare" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+            LinkedIn
+          </a>
         </div>
 
-        <aside class="hero-card">
-          <h3>What I work on</h3>
-          <div class="hero-list">
-            <div class="hero-item">
-              <strong>GenAI & RAG</strong>
-              <span>LangChain, LLM-as-a-Judge, reranking, multi-agent workflows, grounding analysis</span>
-            </div>
-            <div class="hero-item">
-              <strong>MLOps & Evaluation</strong>
-              <span>MLflow, observability, confidence calibration, drift monitoring, explainability</span>
-            </div>
-            <div class="hero-item">
-              <strong>Applied Data Science</strong>
-              <span>Python, PySpark, SQL, Databricks, AWS, Azure ML, statistical modeling</span>
-            </div>
-            <div class="hero-item">
-              <strong>Industry Focus</strong>
-              <span>Healthcare, enterprise AI, forecasting, experimentation, intelligent automation</span>
-            </div>
-          </div>
-        </aside>
+        <div class="hero-stack" aria-label="Core stack">
+          <span class="chip">Python</span>
+          <span class="chip">LangGraph</span>
+          <span class="chip">LangChain</span>
+          <span class="chip">RAG</span>
+          <span class="chip">MCP</span>
+          <span class="chip">MLflow</span>
+          <span class="chip">Databricks</span>
+          <span class="chip">PySpark</span>
+          <span class="chip">AWS</span>
+          <span class="chip">Azure ML</span>
+          <span class="chip">Docker</span>
+          <span class="chip">CI/CD</span>
+        </div>
       </div>
     </section>
 
-    <section id="about">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>About</h2>
-          </div>
-          <p>My work sits at the intersection of machine learning engineering, evaluation, and business-facing AI systems.</p>
+    <!-- ================= METRICS RIBBON ================= -->
+    <section class="metrics" aria-label="Impact at a glance">
+      <div class="wrap">
+        <ul>
+          <li>
+            <div class="metric-value">$25M<span class="unit">+</span></div>
+            <div class="metric-label">Projected annual savings</div>
+            <div class="metric-note">clinical NLP replacing a managed AWS service</div>
+          </li>
+          <li>
+            <div class="metric-value">9<span class="unit">×</span></div>
+            <div class="metric-label">Pipeline runtime reduction</div>
+            <div class="metric-note">~2 hr → 15 min, concurrent + fault-tolerant</div>
+          </li>
+          <li>
+            <div class="metric-value">3<span class="unit">×</span></div>
+            <div class="metric-label">Reviewer throughput</div>
+            <div class="metric-note">LLM-as-a-Judge + human-in-the-loop routing</div>
+          </li>
+          <li>
+            <div class="metric-value">30<span class="unit">+</span></div>
+            <div class="metric-label">Markets on production models</div>
+            <div class="metric-note">95% less manual effort, ~500 hrs/yr saved</div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= FEATURED SYSTEMS ================= -->
+    <section class="block" id="systems">
+      <div class="wrap">
+        <p class="eyebrow">// featured systems</p>
+        <h2 class="section-title">Production systems I designed and own</h2>
+        <p class="section-lede">Each one follows the same format: the architecture, the business problem, the engineering decisions, and what changed once it shipped.</p>
+
+        <div class="projects">
+
+          <!-- Project 1 -->
+          <article class="project">
+            <div class="project-head">
+              <h3>Agentic RAG for Competitive Intelligence</h3>
+              <span class="project-org">Centene · 2024–present</span>
+            </div>
+            <div class="arch" role="img" aria-label="Architecture: user query goes to a LangGraph router, then retrieval agent, reranker, generator and explainer agents, then an LLM-as-a-Judge which either returns the answer or routes low-confidence outputs to human review, which feeds an evaluation dataset.">
+              <div class="arch-label">System architecture</div>
+              <div class="flow">
+                <span class="node">Analyst query</span><span class="arrow">→</span>
+                <span class="node ai">LangGraph router</span><span class="arrow">→</span>
+                <span class="node ai">Retrieval agent</span><span class="arrow">→</span>
+                <span class="node ai">Reranker</span><span class="arrow">→</span>
+                <span class="node ai">Generator + Explainer</span><span class="arrow">→</span>
+                <span class="node ai">LLM-as-a-Judge</span><span class="arrow">→</span>
+                <span class="node out">Grounded answer</span>
+                <span class="arrow">/</span>
+                <span class="node human">Low-confidence → Human review</span><span class="arrow">↺</span>
+                <span class="node">Eval dataset</span>
+              </div>
+            </div>
+            <div class="apsm">
+              <div>
+                <h4>Problem</h4>
+                <p>Finance and strategy teams needed fast, trustworthy answers from scattered competitive-intelligence data. In a regulated, finance-facing setting, one hallucinated number would undermine trust in the whole tool.</p>
+              </div>
+              <div>
+                <h4>Engineering</h4>
+                <ul>
+                  <li>Multi-agent LangGraph workflow that splits retrieval, reranking, generation, and explanation into separate agents</li>
+                  <li>LLM-as-a-Judge that scores coverage and grounding on every response</li>
+                  <li>Confidence-based routing sends weak answers to human reviewers, and their labels feed back into the eval set</li>
+                </ul>
+              </div>
+              <div class="impact">
+                <h4>Production impact</h4>
+                <ul>
+                  <li><b>3×</b> reviewer throughput</li>
+                  <li>A finance-aligned evaluation loop that improves the system with use</li>
+                  <li>Grounding is checked before an answer reaches a stakeholder</li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-foot">
+              <span class="chip">LangGraph</span><span class="chip">RAG</span><span class="chip">Multi-agent</span><span class="chip">LLM-as-a-Judge</span><span class="chip">HITL</span>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project">
+            <div class="project-head">
+              <h3>Model Deployment &amp; Evaluation Platform</h3>
+              <span class="project-org">Centene · 2024–present</span>
+            </div>
+            <div class="arch" role="img" aria-label="Architecture: market data feeds Databricks training jobs, models are registered in MLflow and deployed across 30+ markets, with n8n-orchestrated monitoring for tracing, drift and calibration feeding alerts back to owners.">
+              <div class="arch-label">System architecture</div>
+              <div class="flow">
+                <span class="node">Market data (30+)</span><span class="arrow">→</span>
+                <span class="node ai">Databricks jobs</span><span class="arrow">→</span>
+                <span class="node ai">MLflow registry</span><span class="arrow">→</span>
+                <span class="node out">Production scoring</span><span class="arrow">→</span>
+                <span class="node ai">n8n monitors: tracing · drift · calibration</span><span class="arrow">↺</span>
+                <span class="node human">Owner alerts</span>
+              </div>
+            </div>
+            <div class="apsm">
+              <div>
+                <h4>Problem</h4>
+                <p>Quality Rating System models for 30+ markets were run through manual Excel workflows. Every refresh was slow and error-prone, and nobody could see when a model had drifted.</p>
+              </div>
+              <div>
+                <h4>Engineering</h4>
+                <ul>
+                  <li>Moved the models to versioned Databricks pipelines with an MLflow registry, end to end</li>
+                  <li>Automated evaluation with n8n for tracing, drift detection, and calibration checks</li>
+                  <li>Set org-wide Python packaging standards: CI/CD, git hooks, auto-tagged releases, auto-published docs</li>
+                </ul>
+              </div>
+              <div class="impact">
+                <h4>Production impact</h4>
+                <ul>
+                  <li><b>30+</b> markets running on production pipelines</li>
+                  <li><b>95%</b> less manual effort, about <b>500</b> analyst hours saved per year</li>
+                  <li>Internal packages (AI compliance review, auto-reporting) saving <b>250+</b> more hours per year</li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-foot">
+              <span class="chip">Databricks</span><span class="chip">MLflow</span><span class="chip">n8n</span><span class="chip">PySpark</span><span class="chip">CI/CD</span><span class="chip">Poetry</span>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project">
+            <div class="project-head">
+              <h3>Clinical NLP Entity Extraction</h3>
+              <span class="project-org">Centene · 2023</span>
+            </div>
+            <div class="arch" role="img" aria-label="Architecture: medical claims text passes through a rule-based extractor and a biomedical embedding model backed by a PubMed vector index, outputs are fused into structured ICD-10 codes and clinical attributes.">
+              <div class="arch-label">System architecture</div>
+              <div class="flow">
+                <span class="node">Medical claims text</span><span class="arrow">→</span>
+                <span class="node">Rule-based extractor</span><span class="arrow">+</span>
+                <span class="node ai">Biomedical embeddings</span><span class="arrow">⇄</span>
+                <span class="node ai">PubMed vector index</span><span class="arrow">→</span>
+                <span class="node ai">Hybrid fusion</span><span class="arrow">→</span>
+                <span class="node out">ICD-10 + clinical attributes</span>
+              </div>
+            </div>
+            <div class="apsm">
+              <div>
+                <h4>Problem</h4>
+                <p>Parsing ICD-10 codes and clinical attributes from claims ran on AWS Comprehend Medical. At claims volume, that managed-service bill was a recurring cost of tens of millions of dollars.</p>
+              </div>
+              <div>
+                <h4>Engineering</h4>
+                <ul>
+                  <li>Hybrid NER that pairs deterministic rules with domain-specific biomedical embeddings</li>
+                  <li>PubMed vector integration and transfer learning to cover the long tail of clinical terms</li>
+                </ul>
+              </div>
+              <div class="impact">
+                <h4>Production impact</h4>
+                <ul>
+                  <li><b>~96%</b> extraction accuracy</li>
+                  <li><b>$25–27M</b> projected annual savings from replacing the managed service</li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-foot">
+              <span class="chip">NLP / NER</span><span class="chip">Embeddings</span><span class="chip">Vector search</span><span class="chip">Transfer learning</span>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="project">
+            <div class="project-head">
+              <h3>Generative Workload Simulator for Amazon S3</h3>
+              <span class="project-org">Amazon · 2023–24</span>
+            </div>
+            <div class="arch" role="img" aria-label="Architecture: production S3 request telemetry feeds a SARIMA model for seasonality and a Gaussian copula for cross-feature dependencies; together they generate synthetic workloads that are validated against production distributions before being used for performance experiments.">
+              <div class="arch-label">System architecture</div>
+              <div class="flow">
+                <span class="node">S3 request telemetry (271M)</span><span class="arrow">→</span>
+                <span class="node ai">SARIMA (seasonality)</span><span class="arrow">+</span>
+                <span class="node ai">Gaussian copula (dependencies)</span><span class="arrow">→</span>
+                <span class="node ai">Synthetic workload generator</span><span class="arrow">→</span>
+                <span class="node out">Perf experiments</span>
+              </div>
+            </div>
+            <div class="apsm">
+              <div>
+                <h4>Problem</h4>
+                <p>S3 teams needed realistic traffic for performance experiments, and replaying real production workloads wasn't an option because it would disrupt the service.</p>
+              </div>
+              <div>
+                <h4>Engineering</h4>
+                <ul>
+                  <li>Generative model that combines SARIMA temporal dynamics with Gaussian-copula dependency structure</li>
+                  <li>Validated at production scale on 271M encoded time-series records</li>
+                </ul>
+              </div>
+              <div class="impact">
+                <h4>Production impact</h4>
+                <ul>
+                  <li><b>74%</b> distributional similarity to production</li>
+                  <li><b>98%</b> normalized frequency preservation</li>
+                  <li>Performance experiments no longer need to touch production</li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-foot">
+              <span class="chip">Generative modeling</span><span class="chip">Time series</span><span class="chip">Large-scale data</span><span class="chip">AWS</span>
+            </div>
+          </article>
+
         </div>
-        <div class="about-grid">
+      </div>
+    </section>
+
+    <!-- ================= LEADERSHIP ================= -->
+    <section class="block" id="leadership">
+      <div class="wrap">
+        <p class="eyebrow">// cross-functional &amp; client leadership</p>
+        <h2 class="section-title">I own the outcome, not just the model</h2>
+        <p class="section-lede">I've worked as a consultant and as an embedded engineer, so I'm used to presenting to clients, negotiating scope, and staying accountable for what happens after the handoff.</p>
+
+        <div class="grid-2">
           <div class="card">
-            <h3>Profile</h3>
-            <p class="muted">
-              I currently work as a <strong>Data Scientist 2 at Centene</strong>, where I build production-grade machine learning systems and GenAI applications. My recent work includes interpretable compliance modeling across 30+ markets, evaluation pipelines with MLflow, and a competitive-intelligence chatbot with retrieval, reranking, explanation, and human-in-the-loop safeguards.
-            </p>
-            <p class="muted">
-              Previously, I worked as an <strong>AI Researcher at Amazon</strong>, where I designed generative time-series models to synthesize large-scale storage workloads for non-disruptive experimentation. I enjoy shipping reliable systems, communicating technical ideas clearly, and building tools that make other teams faster.
-            </p>
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <h3>Led a turnaround after a multi-million dollar miss</h3>
+            <p>When the incumbent claims-forecasting system missed by millions, I led a 5-person team to rebuild it. I designed a new four-factor PMPM decomposition that uses ML only to isolate population-mix effects, which kept the model explainable to actuaries and finance.</p>
+            <p class="proof">MAPE ~33% → &lt;12% · 6 cost categories · 6.7% bias</p>
           </div>
           <div class="card">
-            <h3>Highlights</h3>
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div>
+            <h3>Client-facing delivery, end to end</h3>
+            <p>I run technical delivery and pre-handoff validation for client production deployments. I also built a multi-tier pricing dashboard that lets actuarial clients benchmark plan price positions and recategorize competitive thresholds in real time.</p>
+            <p class="proof">0 production crashes in the first 3 months</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
+            <h3>Pitched AI tooling to senior IT leadership</h3>
+            <p>I saw the need for an internal AI-assisted development platform with PHI/PII guardrails, pitched it to senior IT leaders, and secured beta access. I now train my team on agent-driven development workflows.</p>
+            <p class="proof">Pitch → executive buy-in → beta rollout</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></div>
+            <h3>Raised the engineering bar across the org</h3>
+            <p>I ran Databricks enablement for 65 analysts, co-defined Python deployment standards with the platform team, and mentored two analysts through end-to-end ML projects.</p>
+            <p class="proof">65 analysts · 80+ onboarding hrs · ~$10K training cost avoided</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= STACK ================= -->
+    <section class="block" id="stack">
+      <div class="wrap">
+        <p class="eyebrow">// stack</p>
+        <h2 class="section-title">Tools I ship with</h2>
+
+        <div class="stack">
+          <div class="card">
+            <h3>GenAI &amp; Agents</h3>
             <div class="chips">
-              <span class="chip">RAG Systems</span>
-              <span class="chip">LangChain</span>
-              <span class="chip">Multi-Agent Workflows</span>
-              <span class="chip">LLM Evaluation</span>
-              <span class="chip">MLflow</span>
-              <span class="chip">SHAP</span>
-              <span class="chip">Drift Monitoring</span>
-              <span class="chip">Databricks</span>
-              <span class="chip">Python</span>
-              <span class="chip">PySpark</span>
-              <span class="chip">SQL</span>
-              <span class="chip">TensorFlow</span>
-              <span class="chip">AWS</span>
-              <span class="chip">Azure ML</span>
-              <span class="chip">A/B Testing</span>
+              <span class="chip">LangGraph</span><span class="chip">LangChain</span><span class="chip">CrewAI</span><span class="chip">RAG</span><span class="chip">MCP</span><span class="chip">LLM-as-a-Judge</span><span class="chip">Prompt optimization</span><span class="chip">Hallucination analysis</span><span class="chip">n8n</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>MLOps &amp; Evaluation</h3>
+            <div class="chips">
+              <span class="chip">MLflow</span><span class="chip">Model observability</span><span class="chip">Drift &amp; calibration</span><span class="chip">Model governance</span><span class="chip">SHAP</span><span class="chip">A/B testing</span><span class="chip">CI/CD</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Engineering &amp; Cloud</h3>
+            <div class="chips">
+              <span class="chip">Python</span><span class="chip">PySpark</span><span class="chip">SQL</span><span class="chip">Databricks</span><span class="chip">AWS</span><span class="chip">Azure ML</span><span class="chip">Docker</span><span class="chip">Git</span><span class="chip">Cloudflare</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="experience">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Experience</h2>
-          </div>
-          <p>Selected roles focused on production ML, GenAI systems, and applied research.</p>
-        </div>
+    <!-- ================= EXPERIENCE ================= -->
+    <section class="block" id="experience">
+      <div class="wrap">
+        <p class="eyebrow">// experience</p>
+        <h2 class="section-title">Where I've shipped</h2>
 
         <div class="timeline">
-          <article class="timeline-item">
+          <div class="role-row current">
             <div class="role-top">
-              <div>
-                <h3>Data Scientist 2 · Centene</h3>
-                <div class="muted">SF Bay Area</div>
-              </div>
-              <div class="date">May 2024 – Present</div>
+              <h3>Data Scientist 2 <span>· Centene</span></h3>
+              <span class="role-dates">May 2024 – Present · SF Bay Area</span>
             </div>
-            <ul class="clean">
-              <li>Led end-to-end deployment of Quality Rating System models, replacing spreadsheet-heavy workflows with interpretable ML pipelines across 30+ markets.</li>
-              <li>Built continuous evaluation pipelines using MLflow, including tracing, drift monitoring, and confidence calibration, reducing manual effort by 95%.</li>
-              <li>Architected a competitive-intelligence chatbot with LangChain and vector-powered RAG, including retrieval, reranking, explanation, and human-in-the-loop review.</li>
-              <li>Created internal Python packages for presentation automation and SHAP-based explainability, saving teams significant recurring time.</li>
-              <li>Led Databricks workshops for 65 analysts and mentored analysts through end-to-end ML project delivery.</li>
-            </ul>
-          </article>
-
-          <article class="timeline-item">
-            <div class="role-top">
-              <div>
-                <h3>AI Researcher · Amazon</h3>
-                <div class="muted">Seattle</div>
-              </div>
-              <div class="date">Oct 2023 – Mar 2024</div>
-            </div>
-            <ul class="clean">
-              <li>Designed a SARIMA + Gaussian copula generative model to synthesize large-scale storage request workloads for S3 performance experimentation.</li>
-              <li>Validated the approach on 271M encoded time-series records spanning capacity, operation type, container type, and region.</li>
-              <li>Demonstrated strong preservation of production-like behavior with 74% distributional similarity and 98% normalized frequency preservation.</li>
-            </ul>
-          </article>
-
-          <article class="timeline-item">
-            <div class="role-top">
-              <div>
-                <h3>Machine Learning Intern · Centene</h3>
-                <div class="muted">St. Louis</div>
-              </div>
-              <div class="date">Jun 2023 – Sep 2023</div>
-            </div>
-            <ul class="clean">
-              <li>Built a hybrid NLP entity-recognition system combining rules and biomedical embeddings to parse ICD-10 codes and clinical attributes at around 96% accuracy.</li>
-              <li>Improved terminology coverage using PubMed vector integration and transfer learning for claims-focused medical language tasks.</li>
-            </ul>
-          </article>
-
-          <article class="timeline-item">
-            <div class="role-top">
-              <div>
-                <h3>Data Scientist Intern · Ernst &amp; Young</h3>
-                <div class="muted">Bangalore</div>
-              </div>
-              <div class="date">Sep 2021 – Mar 2022</div>
-            </div>
-            <ul class="clean">
-              <li>Demonstrated strong performance gains for graph-based recommender systems, including a 9× improvement across several evaluation metrics.</li>
-              <li>Built scalable ingestion and orchestration pipelines with Azure Data Factory for 10,000+ global ML model submissions.</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Featured Work</h2>
+            <p>GenAI and production ML lead for competitive intelligence and forecasting: agentic RAG, LLM evaluation, ML platform work, and client delivery. Re-architected a core CI pipeline for 9× faster runs with concurrency, retries, and structured logging.</p>
           </div>
-          <p>A blend of production systems, public repositories, and research-oriented work that reflects both applied impact and technical depth.</p>
+          <div class="role-row">
+            <div class="role-top">
+              <h3>AI Researcher <span>· Amazon</span></h3>
+              <span class="role-dates">Oct 2023 – Mar 2024 · Seattle</span>
+            </div>
+            <p>Built a generative workload model for S3 performance experiments, validated on 271M time-series records.</p>
+          </div>
+          <div class="role-row">
+            <div class="role-top">
+              <h3>Machine Learning Intern <span>· Centene</span></h3>
+              <span class="role-dates">Jun – Sep 2023 · St. Louis</span>
+            </div>
+            <p>Built a hybrid clinical NER system to replace AWS Comprehend Medical: ~96% accuracy, $25–27M projected annual savings.</p>
+          </div>
+          <div class="role-row">
+            <div class="role-top">
+              <h3>AI Consultant <span>· Ernst &amp; Young</span></h3>
+              <span class="role-dates">2019 – 2022 · Bangalore</span>
+            </div>
+            <p>Client-facing ML consulting. Improved recommender ranking metrics 9× with graph-based models and built Azure Data Factory pipelines that evaluated 10,000+ model submissions.</p>
+          </div>
+          <div class="role-row">
+            <div class="role-top">
+              <h3>Deep Learning Consultant <span>· Bounce</span></h3>
+              <span class="role-dates">Bangalore</span>
+            </div>
+            <p>Deployed real-time license-plate OCR, which lifted scooter-rental bookings by 17%.</p>
+          </div>
         </div>
 
-        <div class="projects-grid">
-          <article class="card project-card">
-            <div class="project-top">
-              <div>
-                <h3>Competitive Intelligence RAG Assistant</h3>
-                <div class="project-meta">Production GenAI system</div>
-              </div>
-            </div>
-            <p class="muted">Designed a retrieval workflow with reranking, grounded answer generation, explanation layers, LLM-as-a-Judge evaluation, and low-confidence routing to human review. Built to support finance-aligned research workflows and faster decision support.</p>
-            <div class="chips">
-              <span class="chip">LangChain</span>
-              <span class="chip">RAG</span>
-              <span class="chip">Reranking</span>
-              <span class="chip">LLM Evaluation</span>
-            </div>
-          </article>
-
-          <article class="card project-card">
-            <div class="project-top">
-              <div>
-                <h3>QRS Modeling Platform</h3>
-                <div class="project-meta">Production ML + MLOps</div>
-              </div>
-            </div>
-            <p class="muted">Built interpretable compliance modeling workflows using XGBoost and survival analysis, backed by MLflow tracing, drift checks, and confidence calibration. Replaced legacy analyst-heavy processes with scalable and auditable ML systems.</p>
-            <div class="chips">
-              <span class="chip">XGBoost</span>
-              <span class="chip">Survival Analysis</span>
-              <span class="chip">MLflow</span>
-              <span class="chip">Calibration</span>
-            </div>
-          </article>
-
-          <article class="card project-card">
-            <div class="project-top">
-              <div>
-                <h3><a href="https://github.com/ameyabhamare/FitMe" target="_blank" rel="noreferrer">FitMe</a></h3>
-                <div class="project-meta">Streamlit app · health analytics</div>
-              </div>
-            </div>
-            <p class="muted">Developed a web app that generates insights from Fitbit data across sleep, weight, heart rate, activity, and caloric needs. Automated the build-to-release workflow with GitHub Actions, maintained high unit-test coverage, and enforced code quality with linting.</p>
-            <div class="chips">
-              <span class="chip">Streamlit</span>
-              <span class="chip">GitHub Actions</span>
-              <span class="chip">PyUnit</span>
-              <span class="chip">Analytics</span>
-            </div>
-          </article>
-
-          <article class="card project-card">
-            <div class="project-top">
-              <div>
-                <h3><a href="https://github.com/ameyabhamare/sentence-deconstructor" target="_blank" rel="noreferrer">Sentence Deconstructor</a></h3>
-                <div class="project-meta">NLP + interpretability</div>
-              </div>
-            </div>
-            <p class="muted">Research-driven work on interpretable recognition and explainable deconstruction of written English semantics. This project pairs well with Ameya’s publication record and shows interest in language understanding beyond purely application-level NLP.</p>
-            <div class="chips">
-              <span class="chip">Python</span>
-              <span class="chip">NLP</span>
-              <span class="chip">Interpretability</span>
-              <span class="chip">Research</span>
-            </div>
-          </article>
-
-          <article class="card project-card">
-            <div class="project-top">
-              <div>
-                <h3><a href="https://github.com/ameyabhamare/King-County-Road-Accidents" target="_blank" rel="noreferrer">King County Road Accidents</a></h3>
-                <div class="project-meta">Statistics + hypothesis testing</div>
-              </div>
-            </div>
-            <p class="muted">Analyzed whether rainfall, windspeed, and visibility affect accident severity using EDA and formal statistical testing including t-tests, ANOVA, and chi-squared analysis. A solid showcase of rigorous analytical reasoning and communication.</p>
-            <div class="chips">
-              <span class="chip">EDA</span>
-              <span class="chip">t-test</span>
-              <span class="chip">ANOVA</span>
-              <span class="chip">Chi-squared</span>
-            </div>
-          </article>
-
-          <article class="card project-card">
-            <div class="project-top">
-              <div>
-                <h3>Publications & Research</h3>
-                <div class="project-meta">Conference papers</div>
-              </div>
-            </div>
-            <p class="muted">Includes published work on interpretable semantics in written English and machine learning for exoplanet identification, reflecting an ability to work across applied engineering and research-oriented problem solving.</p>
-            <div class="chips">
-              <span class="chip">Google Scholar</span>
-              <span class="chip">ResearchGate</span>
-              <span class="chip">NLP</span>
-              <span class="chip">ML Research</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Skills</h2>
-          </div>
-          <p>Core capabilities grouped around the kinds of systems I like to build.</p>
-        </div>
-
-        <div class="skills-grid">
+        <div class="edu">
           <div class="card">
-            <h3>GenAI & Retrieval</h3>
-            <div class="chips">
-              <span class="chip">RAG</span>
-              <span class="chip">LangChain</span>
-              <span class="chip">Prompt Optimization</span>
-              <span class="chip">Hallucination Analysis</span>
-              <span class="chip">Multi-Agent Systems</span>
-              <span class="chip">LLM-as-a-Judge</span>
-            </div>
+            <h3>M.S. Data Science</h3>
+            <p>University of Washington, Seattle · GPA 3.9</p>
           </div>
           <div class="card">
-            <h3>Evaluation & MLOps</h3>
-            <div class="chips">
-              <span class="chip">Model Observability</span>
-              <span class="chip">Drift Monitoring</span>
-              <span class="chip">CI/CD</span>
-              <span class="chip">MLflow</span>
-              <span class="chip">SHAP</span>
-              <span class="chip">A/B Testing</span>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Data Science</h3>
-            <div class="chips">
-              <span class="chip">Python</span>
-              <span class="chip">PySpark</span>
-              <span class="chip">TensorFlow</span>
-              <span class="chip">SQL</span>
-              <span class="chip">Statistical Analysis</span>
-              <span class="chip">Time Series</span>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Platforms & Tools</h3>
-            <div class="chips">
-              <span class="chip">Databricks</span>
-              <span class="chip">AWS</span>
-              <span class="chip">Azure ML</span>
-              <span class="chip">Poetry</span>
-              <span class="chip">Vector DBs</span>
-              <span class="chip">Analytics Enablement</span>
-            </div>
+            <h3>B.Tech Computer Science</h3>
+            <p>PES University, Bangalore · GPA 3.9</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="education">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Education</h2>
-          </div>
-          <p>Strong academic foundation in data science and computer science.</p>
+    <!-- ================= CONTACT ================= -->
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <div>
+          <h2>Building something that has to work in production?</h2>
+          <p>I'm open to Applied AI and ML Engineering roles. The fastest way to reach me is email.</p>
         </div>
-        <div class="about-grid">
-          <div class="card">
-            <h3>University of Washington</h3>
-            <p class="muted"><strong>Master of Science in Data Science</strong> · GPA: 3.9 / 4.0</p>
-            <p class="muted">Coursework includes probability, applied statistics, experimental design, visualization, scalable data systems, machine learning, causal inference, time series, clustering, anomaly detection, and human-centered data science.</p>
-          </div>
-          <div class="card">
-            <h3>PES University</h3>
-            <p class="muted"><strong>Bachelor of Technology in Computer Science</strong> · GPA: 3.9 / 4.0</p>
-            <p class="muted">Built a strong base in computing, machine learning, software systems, and applied analytics.</p>
-          </div>
+        <div class="cta" style="margin-top:0">
+          <a class="btn btn-primary" href="mailto:ameyarb1804@gmail.com">ameyarb1804@gmail.com</a>
+          <a class="btn" href="resume.pdf" target="_blank" rel="noopener">Resume</a>
         </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Contact</h2>
-          </div>
-          <p>Open to conversations around machine learning, GenAI systems, and impactful data science roles.</p>
-        </div>
-        <div class="contact-grid">
-          <a class="card contact-card" href="mailto:ameyarb1804@gmail.com">
-            <div>
-              <h3>Email</h3>
-              <p class="muted">ameyarb1804@gmail.com</p>
-            </div>
-            <div class="muted">Say hello →</div>
-          </a>
-          <a class="card contact-card" href="https://github.com/ameyabhamare" target="_blank" rel="noreferrer">
-            <div>
-              <h3>GitHub</h3>
-              <p class="muted">github.com/ameyabhamare</p>
-            </div>
-            <div class="muted">View repositories →</div>
-          </a>
-          <a class="card contact-card" href="https://www.linkedin.com/in/ameyabhamare" target="_blank" rel="noreferrer">
-            <div>
-              <h3>LinkedIn</h3>
-              <p class="muted">linkedin.com/in/ameyabhamare</p>
-            </div>
-            <div class="muted">Connect professionally →</div>
-          </a>
-          <a class="card contact-card" href="https://scholar.google.com/citations?user=QlklRLIAAAAJ&hl=en" target="_blank" rel="noreferrer">
-            <div>
-              <h3>Google Scholar</h3>
-              <p class="muted">Publications and citations</p>
-            </div>
-            <div class="muted">See research profile →</div>
-          </a>
-          <a class="card contact-card" href="https://www.researchgate.net/profile/Ameya-Bhamare" target="_blank" rel="noreferrer">
-            <div>
-              <h3>ResearchGate</h3>
-              <p class="muted">Research profile and papers</p>
-            </div>
-            <div class="muted">Browse research →</div>
-          </a>
-          <a class="card contact-card" href="#top">
-            <div>
-              <h3>Location</h3>
-              <p class="muted">Santa Clara, California</p>
-            </div>
-            <div class="muted">Based in the Bay Area →</div>
-          </a>
-        </div>
-        <div class="divider"></div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">
-      Built with HTML and CSS for easy deployment on GitHub Pages.
+    <div class="wrap">
+      <span>© <span id="year">2026</span> Ameya Bhamare</span>
+      <div class="links">
+        <a href="https://github.com/ameyabhamare" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/ameyabhamare" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://scholar.google.com/citations?user=QlklRLIAAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
+        <a href="https://www.researchgate.net/profile/Ameya-Bhamare" target="_blank" rel="noopener">ResearchGate</a>
+      </div>
     </div>
   </footer>
 
-  <script>
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    function setActiveLink() {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 120;
-        if (window.scrollY >= sectionTop) current = section.getAttribute('id');
-      });
-      navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
-      });
-    }
-
-    window.addEventListener('scroll', setActiveLink);
-    setActiveLink();
-  </script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
