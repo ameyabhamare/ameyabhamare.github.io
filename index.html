@@ -186,7 +186,8 @@
     .apsm li::before { content: "›"; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); }
     .apsm .impact li { color: var(--text); }
     .apsm .impact b { color: var(--accent); font-weight: 700; }
-    .project-foot { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 24px; border-top: 1px solid var(--border); }
+    .project-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 16px 24px; border-top: 1px solid var(--border); }
+    .project-foot .btn { margin-left: auto; }
     @media (max-width: 860px) { .apsm { grid-template-columns: 1fr; } }
 
     /* ---------- Leadership ---------- */
@@ -532,6 +533,65 @@
             </div>
           </article>
 
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= OPEN SOURCE ================= -->
+    <section class="block" id="open-source">
+      <div class="wrap">
+        <p class="eyebrow">// open source</p>
+        <h2 class="section-title">Things I build on my own time</h2>
+        <p class="section-lede">Side projects where I use the same tools I use at work. The source is on GitHub.</p>
+
+        <div class="projects">
+          <article class="project">
+            <div class="project-head">
+              <h3>Auto Post Publisher</h3>
+              <span class="project-org">Personal project · 2026</span>
+            </div>
+            <div class="arch" role="img" aria-label="Architecture: notes and images go to Claude along with a cached style file and example posts; Claude returns a structured JSON draft; the author reviews it and either sends feedback for a revision or approves it, and approval opens a pull request on GitHub containing the post and images in a single commit.">
+              <div class="arch-label">System architecture</div>
+              <div class="flow">
+                <span class="node">Notes + images</span><span class="arrow">→</span>
+                <span class="node ai">Claude (style file + examples, cached)</span><span class="arrow">→</span>
+                <span class="node ai">JSON-schema draft</span><span class="arrow">→</span>
+                <span class="node human">Author review</span>
+                <span class="arrow">↺</span>
+                <span class="node ai">Revise</span>
+                <span class="arrow">/</span>
+                <span class="node">Approve</span><span class="arrow">→</span>
+                <span class="node out">GitHub PR (one atomic commit)</span>
+              </div>
+            </div>
+            <div class="apsm">
+              <div>
+                <h4>Problem</h4>
+                <p>Turning rough notes and photos into a finished blog post takes hours, and generic AI writing tools don't sound like the author. Publishing should also go through review rather than straight to the site.</p>
+              </div>
+              <div>
+                <h4>Engineering</h4>
+                <ul>
+                  <li>FastAPI app that sends one Claude request with the author's style guide and past posts in a cached system prompt, plus the photos, and gets back a draft in a fixed JSON format</li>
+                  <li>Revisions are added to the same conversation, so the cache and earlier context carry over. If the author edits the draft by hand, Claude builds on that version</li>
+                  <li>Approving a post creates one commit with the post and its images through GitHub's Git Data API and opens a pull request, so a post is never half-published</li>
+                  <li>Uses a GitHub token limited to the posts repo, and handles refusals, cut-off responses and API errors</li>
+                </ul>
+              </div>
+              <div class="impact">
+                <h4>What it delivers</h4>
+                <ul>
+                  <li>Notes in, publish-ready post out, with a <b>human approval</b> step before anything goes live</li>
+                  <li>Drafts follow the author's own voice instead of generic AI writing</li>
+                  <li>I used it to publish <b>"From Prompt Engineering to Context Engineering"</b></li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-foot">
+              <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Claude API</span><span class="chip">Structured outputs</span><span class="chip">Prompt caching</span><span class="chip">PyGithub</span>
+              <a class="btn btn-sm" href="https://github.com/ameyabhamare/auto-post-publisher" target="_blank" rel="noopener">View on GitHub ↗</a>
+            </div>
+          </article>
         </div>
       </div>
     </section>
