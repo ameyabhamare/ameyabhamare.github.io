@@ -228,6 +228,14 @@
     @media (max-width: 760px) { .edu { grid-template-columns: 1fr; } }
     .edu .card p { margin-top: 4px; }
 
+    /* ---------- Awards & publications ---------- */
+    .pubs li { position: relative; padding-left: 16px; margin-top: 10px; color: var(--text-muted); font-size: 14px; }
+    .pubs li::before { content: "›"; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); }
+    .pubs b { color: var(--text); font-weight: 600; }
+    #awards .grid-2 { grid-template-columns: 1fr; }
+    .pubs .cite { font-family: var(--mono); font-size: 12px; color: var(--accent); white-space: nowrap; }
+    .card .proof a:hover { text-decoration: underline; }
+
     /* ---------- Book ---------- */
     .book { margin-top: 40px; display: grid; grid-template-columns: 1fr 2fr; gap: 24px; align-items: start; }
     @media (max-width: 860px) { .book { grid-template-columns: 1fr; } }
@@ -756,6 +764,27 @@
             </div>
             <p>Deployed real-time license-plate OCR, which lifted scooter-rental bookings by 17%.</p>
           </div>
+          <div class="role-row">
+            <div class="role-top">
+              <h3>Data Analyst Intern <span>· Grofers</span></h3>
+              <span class="role-dates">Aug – Nov 2020 · Bangalore</span>
+            </div>
+            <p>Analyzed warehouse picker efficiency and built real-time dashboards to clear dispatch bottlenecks, cutting end-to-end operating time by 47 minutes per workday and operating cost by ₹3.6 per order.</p>
+          </div>
+          <div class="role-row">
+            <div class="role-top">
+              <h3>Deep Learning Research Intern <span>· Lucida</span></h3>
+              <span class="role-dates">Jul – Oct 2020 · Bangalore</span>
+            </div>
+            <p>Co-designed a way to encode a molecule's node and edge features with DeepGraph, and used graph convolutional networks to model drug–target interactions. Reached ~87% accuracy on the Tox21 NR-AR and NR-AR-LBD toxicity tasks.</p>
+          </div>
+          <div class="role-row">
+            <div class="role-top">
+              <h3>Deep Learning Research Intern <span>· PES University</span></h3>
+              <span class="role-dates">Jul 2019 – Oct 2020 · Bangalore</span>
+            </div>
+            <p>Built a multimodal lie detector to support criminal interrogations. Interviewed volunteers and processed their audio and video with FFmpeg and Librosa into a dataset of ~12,000 rows and ~150 features. Published "Deep Neural Networks for Lie Detection with Attention on Bio-signals", which combines visual and non-visual bio-signals and reached 75% accuracy in a real-life setting.</p>
+          </div>
         </div>
 
         <div class="edu">
@@ -766,6 +795,34 @@
           <div class="card">
             <h3>B.Tech Computer Science</h3>
             <p>PES University, Bangalore · GPA 3.9</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= AWARDS & PUBLICATIONS ================= -->
+    <section class="block" id="awards">
+      <div class="wrap">
+        <p class="eyebrow">// awards &amp; publications</p>
+        <h2 class="section-title">Recognition</h2>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Awards</h3>
+            <ul class="pubs">
+              <li><b>Andy Grove Scholarship</b> · Intel Corporation. Selected from 1,800+ applicants in 65 countries for academics, honors, and leadership.</li>
+              <li><b>2× Prof. MRD Scholarship</b> · PES University. Awarded to the top 20 of ~650 students in the School of Computer Science.</li>
+              <li><b>8× Academic Distinction Award</b> · PES University. Earned academic distinction in all 8 semesters.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Publications</h3>
+            <ul class="pubs">
+              <li><b>Deep Neural Networks for Lie Detection with Attention on Bio-signals</b><br>A. R. Bhamare, S. Katharguppe, J. S. Nancy. 7th International Conference on Soft Computing &amp; Machine Intelligence (ISCMI), IEEE, Nov 2020, pp. 143–147. <span class="cite">Cited by 33</span> <a class="accent" href="https://doi.org/10.1109/ISCMI51676.2020.9311575" target="_blank" rel="noopener">DOI ↗</a></li>
+              <li><b>Analysis of Kepler Objects of Interest using Machine Learning for Exoplanet Identification</b><br>A. R. Bhamare, A. Baral, S. Agarwal. International Conference on Intelligent Technologies (CONIT), IEEE, Jun 2021, pp. 1–8. <span class="cite">Cited by 12</span> <a class="accent" href="https://doi.org/10.1109/CONIT51480.2021.9498407" target="_blank" rel="noopener">DOI ↗</a></li>
+              <li><b>IREAD: Interpretable Recognition and Automated Deconstruction of Semantics in Written English</b><br>A. Satish, A. Bhamare, D. Hoskote, V. Raj, G. Srinivasa. EDULEARN23 Proceedings, IATED, 2023, pp. 2266–2275.</li>
+            </ul>
+            <p class="proof"><a href="https://scholar.google.com/citations?user=QlklRLIAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar ↗</a> · <a href="https://www.researchgate.net/profile/Ameya-Bhamare" target="_blank" rel="noopener">ResearchGate ↗</a></p>
           </div>
         </div>
       </div>
