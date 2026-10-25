@@ -547,6 +547,58 @@
         <div class="projects">
           <article class="project">
             <div class="project-head">
+              <h3>CareGap Voice: AI Outreach Agent for Health Plans</h3>
+              <span class="project-org">Personal project · 2026 · synthetic data</span>
+            </div>
+            <div class="arch" role="img" aria-label="Architecture: synthetic members from Synthea are loaded into a FHIR server and exported to a PySpark medallion pipeline, which runs locally or on Databricks and detects care gaps. Results go to Postgres with pgvector. A FastAPI core service writes an outreach script with an LLM, checks it against compliance rules, sends it to a person for review when needed, renders it to speech, and n8n places the call through Twilio. Inbound callback questions are answered from the plan's benefits document with retrieval and a grounding check, or handed to a person.">
+              <div class="arch-label">System architecture</div>
+              <div class="flow">
+                <span class="node">Synthea → FHIR</span><span class="arrow">→</span>
+                <span class="node ai">PySpark / Databricks gap detection</span><span class="arrow">→</span>
+                <span class="node">Postgres + pgvector</span><span class="arrow">→</span>
+                <span class="node ai">LLM script</span><span class="arrow">→</span>
+                <span class="node ai">Compliance rules</span><span class="arrow">→</span>
+                <span class="node human">Human review</span><span class="arrow">→</span>
+                <span class="node ai">Kokoro TTS</span><span class="arrow">→</span>
+                <span class="node out">n8n → Twilio call</span>
+                <span class="arrow">↺</span>
+                <span class="node ai">Callback RAG + grounding check</span>
+              </div>
+            </div>
+            <div class="apsm">
+              <div>
+                <h4>Problem</h4>
+                <p>Health plans need to reach members who are overdue for care, like a missed eye exam or statin refill. Every call has to be compliant and accurate, and must never give medical advice. Each plan has its own rules, languages and call windows.</p>
+              </div>
+              <div>
+                <h4>Engineering</h4>
+                <ul>
+                  <li>Finds three kinds of missed care with one PySpark pipeline that runs locally or as a Databricks job</li>
+                  <li>An LLM writes each call script. Deterministic compliance rules check it, it gets one automatic revision, and anything that still fails goes to a person, never to a call</li>
+                  <li>A callback agent answers benefits questions from the member's own plan document. A check without a model blocks any dollar amount not found in the document</li>
+                  <li>Each health plan is one YAML file. The second plan was added without changing any code</li>
+                  <li>Also included: evals calibrated against human labels, a CI gate that replays recorded model responses, MLflow tracing, an audit log, a hard spending cap, an MCP server, and 14 written design decisions</li>
+                </ul>
+              </div>
+              <div class="impact">
+                <h4>Measured results</h4>
+                <ul>
+                  <li><b>98–100%</b> of call scripts compliant after one revision</li>
+                  <li><b>0%</b> of spoken callback answers gave a wrong amount or another plan's facts</li>
+                  <li>A prompt change raised average compliance from <b>89% to 99.7%</b></li>
+                  <li>Drug names spoken correctly went from <b>55% to 89%</b> after adding a pronunciation list</li>
+                  <li>Runs fully local for <b>$0</b>. Switching to Claude raised correct benefits answers to 97–100%, and the whole eval cost <b>$0.88</b></li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-foot">
+              <span class="chip">FastAPI</span><span class="chip">PySpark</span><span class="chip">Databricks</span><span class="chip">pgvector</span><span class="chip">RAG</span><span class="chip">MLflow</span><span class="chip">n8n</span><span class="chip">Twilio</span><span class="chip">MCP</span><span class="chip">Ollama</span><span class="chip">Claude API</span>
+              <a class="btn btn-sm" href="https://github.com/ameyabhamare/caregap-voice" target="_blank" rel="noopener">View on GitHub ↗</a>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-head">
               <h3>Auto Post Publisher</h3>
               <span class="project-org">Personal project · 2026</span>
             </div>
