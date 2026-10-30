@@ -611,45 +611,49 @@
               <h3>Auto Post Publisher</h3>
               <span class="project-org">Personal project · 2026</span>
             </div>
-            <div class="arch" role="img" aria-label="Architecture: notes and images go to Claude along with a cached style file and example posts; Claude returns a structured JSON draft; the author reviews it and either sends feedback for a revision or approves it, and approval opens a pull request on GitHub containing the post and images in a single commit.">
+            <div class="arch" role="img" aria-label="Architecture: a signed-in user's notes and images go to Claude along with that user's cached style file and example posts, which include their recent published posts. Claude returns a structured JSON draft. The author reviews it and either sends feedback for a revision or approves it. Approval opens a pull request on GitHub containing the post and images in a single commit, and Claude compares the first draft with the approved version to suggest new style rules for the author to accept.">
               <div class="arch-label">System architecture</div>
               <div class="flow">
+                <span class="node">Sign in</span><span class="arrow">→</span>
                 <span class="node">Notes + images</span><span class="arrow">→</span>
-                <span class="node ai">Claude (style file + examples, cached)</span><span class="arrow">→</span>
+                <span class="node ai">Claude (your style + published posts, cached)</span><span class="arrow">→</span>
                 <span class="node ai">JSON-schema draft</span><span class="arrow">→</span>
                 <span class="node human">Author review</span>
                 <span class="arrow">↺</span>
                 <span class="node ai">Revise</span>
                 <span class="arrow">/</span>
                 <span class="node">Approve</span><span class="arrow">→</span>
-                <span class="node out">GitHub PR (one atomic commit)</span>
+                <span class="node out">GitHub PR (one atomic commit)</span><span class="arrow">→</span>
+                <span class="node ai">Learn style rules from edits</span>
               </div>
             </div>
             <div class="apsm">
               <div>
                 <h4>Problem</h4>
-                <p>Turning rough notes and photos into a finished blog post takes hours, and generic AI writing tools don't sound like the author. Publishing should also go through review rather than straight to the site.</p>
+                <p>Turning rough notes and photos into a finished blog post takes hours, and generic AI writing tools don't sound like the author. Publishing should go through review rather than straight to the site, and the tool should get better at the author's voice the more they use it.</p>
               </div>
               <div>
                 <h4>Engineering</h4>
                 <ul>
-                  <li>FastAPI app that sends one Claude request with the author's style guide and past posts in a cached system prompt, plus the photos, and gets back a draft in a fixed JSON format</li>
-                  <li>Revisions are added to the same conversation, so the cache and earlier context carry over. If the author edits the draft by hand, Claude builds on that version</li>
+                  <li>FastAPI app that sends one Claude request with the author's style guide and example posts in a cached system prompt, plus the photos, and gets back a draft in a fixed JSON format</li>
+                  <li>Learns the author's style: it can write a style guide from their published posts, and after each approval it compares Claude's first draft with what shipped and suggests up to three new rules. Nothing changes until the author accepts a rule</li>
+                  <li>Recent published posts are sent as examples automatically. They're cached and re-checked on GitHub at most every 10 minutes, so the prompt cache keeps hitting</li>
+                  <li>Several people can share one install. Each signs in and has their own style guide, drafts and posts repo. Passwords are stored as scrypt hashes and sessions use signed cookies</li>
                   <li>Approving a post creates one commit with the post and its images through GitHub's Git Data API and opens a pull request, so a post is never half-published</li>
-                  <li>Uses a GitHub token limited to the posts repo, and handles refusals, cut-off responses and API errors</li>
                 </ul>
               </div>
               <div class="impact">
                 <h4>What it delivers</h4>
                 <ul>
                   <li>Notes in, publish-ready post out, with a <b>human approval</b> step before anything goes live</li>
-                  <li>Drafts follow the author's own voice instead of generic AI writing</li>
-                  <li>I used it to publish <b>"From Prompt Engineering to Context Engineering"</b></li>
+                  <li>Drafts get closer to the author's voice with every approved post</li>
+                  <li>One install can serve <b>a whole team</b>, with each person's style and posts kept separate</li>
+                  <li>I used it to publish <b>2 posts</b>, including "From Prompt Engineering to Context Engineering" and "What Is an n8n Workflow?"</li>
                 </ul>
               </div>
             </div>
             <div class="project-foot">
-              <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Claude API</span><span class="chip">Structured outputs</span><span class="chip">Prompt caching</span><span class="chip">PyGithub</span>
+              <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Claude API</span><span class="chip">Structured outputs</span><span class="chip">Prompt caching</span><span class="chip">Multi-user auth</span><span class="chip">PyGithub</span>
               <a class="btn btn-sm" href="https://github.com/ameyabhamare/auto-post-publisher" target="_blank" rel="noopener">View on GitHub ↗</a>
             </div>
           </article>
